@@ -1,0 +1,20 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+img{
+  width: 100%;
+}
+ul{
+  padding-left:0px;
+  li{
+    list-style: none;
+    cursor: pointer;
+    padding: 15px 0px;
+    border-bottom: 1px solid #ccc;
+    h4{
+      margin:0px;
+      font-weight: normal;
+    }
+  }
+}
+ 
