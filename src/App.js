@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Recipe from './components/Recipe';
 import Navigation from './components/Navigation';
 import RecipeForm from './components/RecipeForm';
-import './App.scss';
+import './App.css';
 
 
 const App = () => {
