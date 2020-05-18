@@ -1,7 +1,6 @@
 import React from 'react';
 import { css } from 'emotion'
 
-
 const Navigation = ({recipes, recipeToSelect}) => {
   const changeRecipe = (e) => {
     const recipeId = e.target.id;

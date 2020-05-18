@@ -19,7 +19,6 @@ import './App.scss';
 
 
 const App = () => {
-
   //const [recipes, setRecipes] = useState([]);
   const [recipeData, setRecipeData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState('chicken');
