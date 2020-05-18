@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { css } from 'emotion';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -10,7 +11,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -18,10 +18,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 const useStyles = makeStyles((theme) => ({
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -32,12 +28,6 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  author:{
-    marginBottom:30
-  }
 }));
 
 
@@ -51,68 +41,68 @@ const Recipe = (props) => {
     };
     return (
       <div className="Recipe">
-      <Card>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            RB
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={name}
-        subheader="May 17, 2020"
-      />
-      <CardMedia
-        className={classes.media}
-        image={img}
-        title={name}
-      />
-      <CardContent>
-        <Typography variant="body2" component="p" className={classes.author}>
-              Author: {author}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {description} ...
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            {method}
-          </Typography>
-
-        </CardContent>
-      </Collapse>
-    </Card>
-
-
-        
+          <Card>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={css`
+              background-color:red!important;`}
+              >
+                RB
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={name}
+            subheader="May 17, 2020"
+          />
+          <CardMedia
+            className={css`
+              height: 0px;
+              padding-top: 56.25%;`}
+            image={img}
+            title={name}
+          />
+          <CardContent>
+            <Typography variant="body2" component="p" className={css`
+              margin-bottom:30px;`}
+            >
+                  Author: {author}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            {description} ...
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Method:</Typography>
+              <Typography paragraph>
+                {method}
+              </Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
       </div>
     );
-  
 }
 export default Recipe;

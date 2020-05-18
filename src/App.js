@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar'
+import React, { useState, useEffect } from 'react';
+import firebase from './firebase';
+import { css } from 'emotion';
+import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -14,64 +15,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Recipe from './components/Recipe';
 import Navigation from './components/Navigation';
 import RecipeForm from './components/RecipeForm';
-import chickenImg from './assets/chicken.jpg'
-import muttonImg from './assets/mutton.jpg'
-import fishImg from './assets/fish.jpg'
-import './App.scss'
-const recipeData = [
-	{
-		name: "Chicken Curry",
-    description: "Heat the oil in a large saucepan over a medium heat and cook the spring onions and garlic for a few minutes. Add the tomatoes, curry powder and ground ginger and cook for 3-4 minutes. If the pan gets dry add a splash of water and make sure the spices don't burn. Add the chicken and cook for 5 minutes.",
-    method: "Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.",
-    author: "Matt F",
-    id: 'chicken',
-    img: chickenImg
-	},
-  {
-  	name: "Mutton Curry",
-    description: "One way to make mutton tender is to cook it slow. As per Chef Amit, braising or slow cooking the mutton for more than 3 hours on low temperature helps soften it. This method is followed in European style of cooking. Tough fibers, collagens and connective tissues will eventually break down, making it softer.",
-    method: "Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.",
-    author: "Bill",
-    id: 'mutton',
-    img: muttonImg
-  },
-  {
-  	name: "Fish Curry",
-    description: "One way to make mutton tender is to cook it slow. As per Chef Amit, braising or slow cooking the mutton for more than 3 hours on low temperature helps soften it. This method is followed in European style of cooking. Tough fibers, collagens and connective tissues will eventually break down, making it softer.",
-    method: "Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.",
-    author: "Joan",
-    id: 'fish',
-    img: fishImg
-  }
-];
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  appBar:{
-    backgroundColor: 'red'
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  containerStyle: {
-    paddingTop: 80
-  },
-  recipeList: {
-    backgroundColor: '#efefef'
-  },
-  recipeDetails: {
-    backgroundColor: 'whitesmoke'
-  },
-}));
+import './App.scss';
+
+
 const App = () => {
-  const classes = useStyles();
-  const [recipes, setRecipes] = useState('');
+
+  //const [recipes, setRecipes] = useState([]);
+  const [recipeData, setRecipeData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState('chicken');
   const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore()
+      const data = await db.collection('recipeData').get()
+      setRecipeData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    }
+    fetchData()
+  }, []);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -79,42 +40,53 @@ const App = () => {
     setOpen(false);
   };
   useState(() => {
-    setRecipes(recipeData);
-    setSelectedRecipe('chicken')
-  });
-
+    // Tried to set recipes but it did not worked, then used slice
+    //setRecipes(recipeData);
+    setSelectedRecipe("33233080-98dd-11ea-8196-ebab0e2f6221")
+  }, []);
+  const recipes = recipeData.slice();
   const selectNewRecipe = (recipeId) => {
-    
       if(recipeId) {
         setSelectedRecipe(recipeId)
       }
   }
   let recipeToSelect;
   const filteredRecipes = Object.keys(recipes).filter((recipeKey) => recipes[recipeKey].id === selectedRecipe);  
-   console.log(recipes[filteredRecipes]) 
   recipeToSelect = recipes[filteredRecipes];
   return (
     <div className="App">
-    <AppBar position="fixed" className={classes.appBar}>
+     <AppBar position="fixed" className={css`
+      background-color:red!important;`}
+      >
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={css`margin-right: theme.spacing(2);`} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={css`
+            flex-grow: 1;`}
+          >
             Recipe Book
           </Typography>
-          <Button color="inherit" onClick={handleClickOpen}>Add Recipe</Button>
+          <Button color="inherit" onClick={handleClickOpen}>
+            Add Recipe
+          </Button>
         </Toolbar>
       </AppBar>
       <Container>
-        <Grid container spacing={4} className={classes.containerStyle}>
-          <Grid item xs={12} sm={3} className={classes.recipeList}>
+        <Grid container spacing={4} className={css`
+          padding-top: 80px;`}
+        >
+          <Grid item xs={12} sm={3} className={css`
+           background-color: '#efefef';`}
+           >
             {  <Navigation 
               recipes={recipes}
               recipeToSelect={selectNewRecipe}
             />  }
           </Grid>
-          <Grid item xs={12} sm={9} className={classes.recipeDetails}>
+          <Grid item xs={12} sm={9} className={css`
+           background-color: 'whitesmoke';`}
+          >
             { 
               recipeToSelect ? 
                 <Recipe
@@ -125,10 +97,10 @@ const App = () => {
             }
           </Grid>
           <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add new recipe</DialogTitle>
-          <DialogContent>
-            <RecipeForm />
-          </DialogContent>
+            <DialogTitle id="form-dialog-title">Add new recipe</DialogTitle>
+            <DialogContent>
+              <RecipeForm />
+            </DialogContent>
         </Dialog>
         </Grid>
       </Container>

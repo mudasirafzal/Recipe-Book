@@ -1,15 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { css } from 'emotion'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  
-}));
 
 const Navigation = ({recipes, recipeToSelect}) => {
-  const classes = useStyles();
   const changeRecipe = (e) => {
     const recipeId = e.target.id;
     recipeToSelect(recipeId);
@@ -20,16 +13,24 @@ const Navigation = ({recipes, recipeToSelect}) => {
         <ul>
           { recipes ? 
             recipes.map((recipe) => 
-              <li>
+              <li className={css`
+              @media (max-width: 768px) {
+                padding:10px 0px;
+              }`}
+              >
                 <h4 
                   id={recipe.id} 
                   key={recipe.id}
                   onClick={changeRecipe} 
+                  className={css`
+                   :hover{
+                     color:red;
+                   }`}
                 >
                   {recipe.name}
                 </h4>
               </li>
-            ) : ""
+            ) : "Loading..."
           }
         </ul>
       </nav>
