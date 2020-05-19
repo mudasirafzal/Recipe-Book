@@ -1,7 +1,6 @@
 {
   "name": "cookbook",
   "version": "0.1.0",
-  "proxy": "https://fir-cookbook-49f2a.firebaseio.com",
   "private": true,
   "homepage": ".",
   "dependencies": {
