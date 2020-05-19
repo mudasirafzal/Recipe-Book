@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import firebase from './firebase';
+import firebase from 'firebase'
 import { css } from 'emotion';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,6 +19,7 @@ import './App.css';
 
 
 const App = () => {
+
   //const [recipes, setRecipes] = useState([]);
   const [recipeData, setRecipeData] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState('chicken');
