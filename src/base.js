@@ -5,7 +5,7 @@
   const config = {
     apiKey: "AIzaSyD1yAC_HVuv2l2PlpdXSGVyf3WAFuLJXsU",
     authDomain: "fir-cookbook-49f2a.firebaseapp.com",
-    databaseURL: "https://cors-anywhere.herokuapp.com/https://fir-cookbook-49f2a.firebaseio.com",
+    databaseURL: "https://demorecipebook.herokuapp.com/https://fir-cookbook-49f2a.firebaseio.com",
     projectId: "fir-cookbook-49f2a",
     storageBucket: "fir-cookbook-49f2a.appspot.com",
     messagingSenderId: "325495887601",
